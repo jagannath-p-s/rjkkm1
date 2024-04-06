@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import Customers from './Customers';
+import styles from './PointsTable.module.css';
 
 const StyledTableContainer = styled.div`
   padding: 20px;
@@ -76,7 +77,7 @@ const Table = ({ pointsData, handleClaim }) => {
   };
 
   const handleUploadDataClick = () => {
-    setShowCustomers(true);
+    window.location.href = 'https://supabase.com/dashboard/project/smfonqblavmkgmcylqoc/editor/30374';
   };
 
   const handleGoBackClick = () => {

@@ -18,6 +18,8 @@ const PointsTable = () => {
     totalPointsMax: '',
     unclaimedPointsMin: '', // Add unclaimedPointsMin filter
     unclaimedPointsMax: '', // Add unclaimedPointsMax filter
+    fromDate: '',
+  toDate: '',
     sortBy: 'CUSTOMER CODE',
     sortOrder: 'ASC',
   });
@@ -60,6 +62,14 @@ const PointsTable = () => {
       if (filter.unclaimedPointsMax) {
         filteredData = filteredData.filter(point => point["UNCLAIMED POINTS"] <= filter.unclaimedPointsMax);
       }
+// Apply date filters
+if (filter.fromDate) {
+  filteredData = filteredData.filter(point => new Date(point["LAST SALES DATE"]) >= new Date(filter.fromDate));
+}
+if (filter.toDate) {
+  filteredData = filteredData.filter(point => new Date(point["LAST SALES DATE"]) <= new Date(filter.toDate));
+}
+
 
       // Apply sorting
       filteredData.sort((a, b) => {
@@ -135,6 +145,8 @@ const PointsTable = () => {
           value={filter.customerCode}
           onChange={e => handleFilterChange('customerCode', e.target.value)}
         />
+        <input type="date" placeholder="From Date" value={filter.fromDate} onChange={e => handleFilterChange('fromDate', e.target.value)} />
+<input type="date" placeholder="To Date" value={filter.toDate} onChange={e => handleFilterChange('toDate', e.target.value)} />
         <input
           type="text"
           placeholder="Filter by Address1"
@@ -183,6 +195,7 @@ const PointsTable = () => {
           value={filter.sortOrder}
           onChange={e => handleFilterChange('sortOrder', e.target.value)}
         >
+          
           <option value="ASC">Ascending</option>
           <option value="DESC">Descending</option>
         </select>
