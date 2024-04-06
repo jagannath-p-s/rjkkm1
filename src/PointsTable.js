@@ -47,9 +47,14 @@ const PointsTable = () => {
       if (filter.address1) {
         filteredData = filteredData.filter(point => point["ADDRESS1"].toString().toLowerCase().includes(filter.address1.toLowerCase()));
       }
+     
       if (filter.mobileNumber) {
-        filteredData = filteredData.filter(point => point["MOBILE"].toString().toLowerCase().includes(filter.mobileNumber.toLowerCase()));
+        filteredData = filteredData.filter(point => Number(point["MOBILE"]).toString().includes(filter.mobileNumber.toString()));
       }
+      
+      
+
+      
       if (filter.totalPointsMin) {
         filteredData = filteredData.filter(point => point["TOTAL POINTS"] >= filter.totalPointsMin);
       }
@@ -153,7 +158,7 @@ if (filter.toDate) {
           value={filter.address1}
           onChange={e => handleFilterChange('address1', e.target.value)}
         />
-        <input
+       <input
           type="text"
           placeholder="Filter by Mobile Number"
           value={filter.mobileNumber}
