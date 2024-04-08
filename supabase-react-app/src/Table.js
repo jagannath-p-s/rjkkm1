@@ -36,22 +36,31 @@ const StyledButton = styled.button`
     background-color: #45a049;
   }
 `;
-
 const StyledGoBackButton = styled.button`
   padding: 8px 16px;
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
+
+const StyledDeleteButton = styled.button`
+  padding: 8px 16px;
   margin-bottom: 20px;
-  background-color: #4CAF50;
+  margin-right: 10px;
+  background-color: #f44336;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 
   &:hover {
-    background-color: #45a049;
+    background-color: #da190b;
   }
 `;
 
-const Table = ({ pointsData, handleClaim }) => {
+const Table = ({ pointsData, handleClaim, handleDelete }) => {
   const tableRef = useRef(null);
   const [showCustomers, setShowCustomers] = useState(false);
 
@@ -59,6 +68,13 @@ const Table = ({ pointsData, handleClaim }) => {
     const confirmClaim = window.confirm("Are you sure you want to claim this point?");
     if (confirmClaim) {
       handleClaim(point);
+    }
+  };
+
+  const handleDeleteClick = (customerCode) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+    if (confirmDelete) {
+      handleDelete(customerCode);
     }
   };
 
@@ -112,26 +128,31 @@ const Table = ({ pointsData, handleClaim }) => {
               </tr>
             </thead>
             <tbody>
-              {pointsData.map((point) => (
-                <tr key={point["CUSTOMER CODE"]}>
-                  <td>{point["CUSTOMER CODE"]}</td>
-                  <td>{point["ADDRESS1"]}</td>
-                  <td>{point["ADDRESS2"]}</td>
-                  <td>{point["ADDRESS3"]}</td>
-                  <td>{point["ADDRESS4"]}</td>
-                  <td>{point["MOBILE"]}</td>
-                  <td>{point["TOTAL POINTS"]}</td>
-                  <td>{point["CLAIMED POINTS"]}</td>
-                  <td>{point["UNCLAIMED POINTS"]}</td>
-                  <td>{point["LAST SALES DATE"]}</td>
-                  <td>
-                    {point["UNCLAIMED POINTS"] > 0 && (
-                      <StyledButton onClick={() => handleClaimClick(point)}>Add Claim</StyledButton>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+  {pointsData.map((point) => (
+    <tr key={point["CUSTOMER CODE"]}>
+      <td>{point["CUSTOMER CODE"]}</td>
+      <td>{point["ADDRESS1"]}</td>
+      <td>{point["ADDRESS2"]}</td>
+      <td>{point["ADDRESS3"]}</td>
+      <td>{point["ADDRESS4"]}</td>
+      <td>{point["MOBILE"]}</td>
+      <td>{point["TOTAL POINTS"]}</td>
+      <td>{point["CLAIMED POINTS"]}</td>
+      <td>{point["UNCLAIMED POINTS"]}</td>
+      <td>{point["LAST SALES DATE"]}</td>
+      <td>
+        {point["UNCLAIMED POINTS"] > 0 && (
+          <StyledButton onClick={() => handleClaimClick(point)}>Add Claim</StyledButton>
+        )}
+        <StyledDeleteButton onClick={() => handleDeleteClick(point["CUSTOMER CODE"])}>
+          Delete
+        </StyledDeleteButton>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
+
           </StyledTable>
         </>
       )}

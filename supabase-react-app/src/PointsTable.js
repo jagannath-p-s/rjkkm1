@@ -123,6 +123,28 @@ const PointsTable = () => {
     }
   };
 
+  const handleDelete = async (customerCode) => {
+    try {
+      const { data, error } = await supabase
+        .from('points')
+        .delete()
+        .eq('CUSTOMER CODE', customerCode);
+    
+      if (error) {
+        throw error;
+      }
+    
+      // Update pointsData after successful deletion
+      const updatedPointsData = pointsData.filter(item => item["CUSTOMER CODE"] !== customerCode);
+    
+      setPointsData(updatedPointsData);
+      alert('User deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting user:', error.message);
+      alert('Failed to delete user. Please try again later.');
+    }
+  };
+    
   return (
     <div className="points-table">
       <button onClick={handleToggleFilters}>
@@ -187,7 +209,8 @@ const PointsTable = () => {
           <option value="DESC">Descending</option>
         </select>
       </div>}
-      <Table pointsData={pointsData} handleClaim={handleClaim} />
+      <Table pointsData={pointsData} handleClaim={handleClaim} handleDelete={handleDelete} />
+
     </div>
   );
 };
