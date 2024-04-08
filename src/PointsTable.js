@@ -17,7 +17,19 @@ const FilterContainer = styled.div`
   margin-bottom: 20px;
   margin-top:20px;
 `;
+const FilterClearButton = styled.button`
+  margin: 10px;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 
+  &:hover {
+    background-color: #e0e0e0;
+  }
+`;
 const FilterInput = styled.input`
   margin: 10px;
   padding: 8px;
@@ -185,18 +197,21 @@ const PointsTable = () => {
           value={filter.customerCode}
           onChange={e => handleFilterChange('customerCode', e.target.value)}
         />
-        <FilterInput
-          type="date"
-          placeholder="From Date"
-          value={filter.fromDate}
-          onChange={e => handleFilterChange('fromDate', e.target.value)}
-        />
-        <FilterInput
-          type="date"
-          placeholder="To Date"
-          value={filter.toDate}
-          onChange={e => handleFilterChange('toDate', e.target.value)}
-        />
+       <FilterInput
+  type="date"
+  placeholder="From Date"
+  value={filter.fromDate}
+  onChange={e => handleFilterChange('fromDate', e.target.value)}
+/>
+<FilterClearButton onClick={() => handleFilterChange('fromDate', '')}>Clear</FilterClearButton>
+
+<FilterInput
+  type="date"
+  placeholder="To Date"
+  value={filter.toDate}
+  onChange={e => handleFilterChange('toDate', e.target.value)}
+/>
+<FilterClearButton onClick={() => handleFilterChange('toDate', '')}>Clear</FilterClearButton>
         <FilterInput
           type="text"
           placeholder="Filter by Address1"
